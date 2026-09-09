@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Furkan Durmuş — AI & Python Developer</title>
+<meta name="description" content="Furkan Durmuş — AI & Python Developer. RAG, agentic sistemler ve makine öğrenmesi üzerine çalışan bir mühendisin portföyü.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Deliberately single-theme: a dark terminal-adjacent surface is the
+     point of this design (mirrors the dark dev-portfolio genre the user
+     asked to emulate), so tokens are declared once and not reversed for
+     a light host theme. */
+  :root{
+    --bg:#08090b;
+    --bg-alt:#101216;
+    --bg-raised:#15171c;
+    --border:#22252c;
+    --border-hover:#343841;
+    --text:#eceef2;
+    --text-dim:#9299a6;
+    --text-faint:#5c6270;
+    --accent:#7c9eff;
+    --accent-soft:#7c9eff33;
+    --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, Menlo, monospace;
+    --sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:var(--sans);text-wrap:balance;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;}
+
+  .wrap{max-width:900px;margin:0 auto;padding:0 24px;}
+
+  /* Nav */
+  header.nav{
+    position:sticky;top:0;z-index:20;
+    background:rgba(10,10,12,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;max-width:900px;margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;}
+  .brand .dot{width:8px;height:8px;border-radius:2px;background:var(--accent);display:inline-block;transform:rotate(45deg);}
+  .nav-links{display:flex;gap:28px;font-size:14px;color:var(--text-dim);}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{display:flex;gap:10px;align-items:center;}
+  .btn{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:8px 16px;border-radius:8px;font-size:14px;font-weight:500;
+    border:1px solid var(--border);white-space:nowrap;
+  }
+  .btn-primary{background:var(--text);color:var(--bg);border-color:var(--text);}
+  .btn-primary:hover{opacity:0.88;}
+  .btn-ghost{color:var(--text-dim);}
+  .btn-ghost:hover{color:var(--text);border-color:var(--text-faint);}
+  @media (max-width:640px){ .nav-links{display:none;} }
+
+  /* Hero */
+  .hero{padding:96px 0 64px;}
+  .hero h1{font-size:44px;margin:0 0 18px;font-weight:700;letter-spacing:-0.02em;}
+  .hero p{font-size:18px;color:var(--text-dim);max-width:600px;margin:0 0 32px;}
+  .hero .actions{display:flex;gap:12px;flex-wrap:wrap;}
+
+  /* Section divider */
+  .divider{
+    border-top:1px solid var(--border);
+    padding:20px 0;
+    text-align:center;
+    color:var(--text-faint);
+    font-size:13px;
+    font-family:var(--mono);
+  }
+
+  section{padding:56px 0;border-top:1px solid var(--border);}
+  section > .wrap > h2{
+    font-size:22px;margin:0 0 32px;font-weight:600;
+  }
+  .section-grid{display:grid;grid-template-columns:200px 1fr;gap:40px;}
+  @media (max-width:640px){ .section-grid{grid-template-columns:1fr;gap:16px;} }
+  .section-grid h2{margin:0;font-size:22px;font-weight:600;}
+  .section-sub{color:var(--text-faint);font-size:14px;}
+
+  /* Writing list */
+  .post{
+    display:flex;justify-content:space-between;gap:24px;
+    padding:20px 0;border-top:1px solid var(--border);
+  }
+  .post:first-child{border-top:none;padding-top:0;}
+  .post-main{flex:1;min-width:0;}
+  .post h3{margin:0 0 6px;font-size:16px;font-weight:600;}
+  .post h3 a:hover{color:var(--accent);}
+  .post p{margin:0;color:var(--text-dim);font-size:14px;}
+  .post-meta{
+    flex-shrink:0;text-align:right;font-family:var(--mono);
+    font-size:12px;color:var(--text-faint);padding-top:2px;white-space:nowrap;
+  }
+  .see-all{display:inline-flex;align-items:center;gap:6px;margin-top:24px;color:var(--accent);font-size:14px;font-weight:500;}
+
+  /* Projects grid */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:640px){ .grid{grid-template-columns:1fr;} }
+  .card{
+    border:1px solid var(--border);border-radius:12px;padding:18px 20px;
+    background:var(--bg-raised);
+    transition:border-color .15s ease;
+  }
+  .card:hover{border-color:var(--border-hover);}
+  .card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
+  .card h3{margin:0;font-size:15px;font-weight:600;}
+  .star{
+    display:inline-flex;align-items:center;gap:4px;
+    font-family:var(--mono);font-size:12px;color:var(--text-faint);
+    flex-shrink:0;
+  }
+  .card p{margin:0 0 10px;color:var(--text-dim);font-size:13.5px;}
+  .card .link{font-family:var(--mono);font-size:12px;color:var(--text-faint);}
+  .card .link:hover{color:var(--accent);}
+
+  /* Skills */
+  .skill-groups{display:flex;flex-direction:column;gap:18px;}
+  .skill-row{display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;}
+  .skill-row .label{
+    width:140px;flex-shrink:0;color:var(--text-faint);font-size:13px;font-family:var(--mono);
+  }
+  .tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{
+    border:1px solid var(--border);border-radius:6px;
+    padding:4px 10px;font-size:13px;color:var(--text-dim);font-family:var(--mono);
+  }
+
+  /* Education */
+  .edu-item{padding:16px 0;border-top:1px solid var(--border);}
+  .edu-item:first-child{border-top:none;padding-top:0;}
+  .edu-item h3{margin:0 0 4px;font-size:15px;font-weight:600;}
+  .edu-item p{margin:0;color:var(--text-faint);font-size:13.5px;font-family:var(--mono);}
+
+  /* Contact */
+  .contact-email{
+    font-size:26px;font-weight:600;font-family:var(--mono);
+    display:inline-block;margin-bottom:14px;
+  }
+  .contact-email:hover{color:var(--accent);}
+  .contact-desc{color:var(--text-dim);font-size:15px;max-width:480px;margin:0 0 28px;}
+  .social-row{display:flex;gap:20px;font-size:14px;color:var(--text-dim);}
+  .social-row a:hover{color:var(--text);}
+
+  footer{
+    padding:32px 0 48px;color:var(--text-faint);font-size:13px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="dot"></span> furkandrms</div>
+    <nav class="nav-links">
+      <a href="#writing">Writing</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="https://github.com/furkandrms" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-primary" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="border-top:none;padding-bottom:0;">
+    <h1>Furkan Durmuş</h1>
+    <p>AI &amp; Python Developer building RAG pipelines and agentic systems: FastAPI backends, vector search, and multi-agent orchestration with LangChain and OpenAI models. Based in Istanbul.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://medium.com/@Furkandurmus" target="_blank" rel="noopener">Read the writing</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </section>
+
+  <div class="divider">Writing about AI engineering, RAG, and agentic systems</div>
+
+  <section id="writing">
+    <div class="section-grid">
+      <div>
+        <h2>Writing</h2>
+        <div class="section-sub">on Medium</div>
+      </div>
+      <div>
+        <div class="post">
+          <div class="post-main">
+            <h3><a href="https://medium.com/@Furkandurmus/connect-your-windows-pc-to-your-ai-agent-with-copilot-studio-computer-use-5b4163fa02da" target="_blank" rel="noopener">Connect Your Windows PC to Your AI Agent with Copilot Studio Computer Use</a></h3>
+            <p>Setting up a local Windows PC as a Personal Desktop Agent using Microsoft Copilot Studio's Computer Use.</p>
+          </div>
+          <div class="post-meta">2026.06.19</div>
+        </div>
+        <div class="post">
+          <div class="post-main">
+            <h3><a href="https://medium.com/peakup-tech-news/copilot-is-no-longer-just-an-assistant-its-your-business-partner-the-work-iq-era-begins-c0d4640b7ea6" target="_blank" rel="noopener">Copilot Is No Longer Just an Assistant, It's Your Business Partner: The Work IQ Era Begins</a></h3>
+            <p>What happened at Microsoft Ignite 2025.</p>
+          </div>
+          <div class="post-meta">2025.12.14</div>
+        </div>
+        <div class="post">
+          <div class="post-main">
+            <h3><a href="https://medium.com/@Furkandurmus/google-cloud-%C3%BCzerinde-proje-olu%C5%9Fturma-ve-video-intelligence-api-ile-g%C3%B6r%C3%BCnt%C3%BC-i%CC%87%C5%9Flemeye-giri%C5%9F-1d25c6ed67a3" target="_blank" rel="noopener">Google Cloud Üzerinde Proje Oluşturma ve Video Intelligence API ile Görüntü İşlemeye Giriş</a></h3>
+            <p>Google Cloud'un Video Intelligence API hizmetine giriş: kurulum ve ilk adımlar.</p>
+          </div>
+          <div class="post-meta">2025.11.10</div>
+        </div>
+        <div class="post">
+          <div class="post-main">
+            <h3><a href="https://medium.com/@Furkandurmus/google-cloud-video-intelligence-api-video-analizinde-yeni-nesil-%C3%A7%C3%B6z%C3%BCm-2f27c54e8a78" target="_blank" rel="noopener">Google Cloud Video Intelligence API: Video Analizinde Yeni Nesil Çözüm</a></h3>
+            <p>Bulut tabanlı görüntü işleme ve computer vision üzerine genel bir bakış.</p>
+          </div>
+          <div class="post-meta">2025.10.05</div>
+        </div>
+        <a class="see-all" href="https://medium.com/@Furkandurmus" target="_blank" rel="noopener">See all posts on Medium →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-grid">
+      <div>
+        <h2>Projects</h2>
+        <div class="section-sub">selected work, more on GitHub</div>
+      </div>
+      <div>
+        <div class="grid">
+
+          <div class="card">
+            <div class="card-top"><h3>multi-modal-agent</h3></div>
+            <p>FastAPI app powered by a multi-agent architecture: LLM-based task routing, session/memory management, and MongoDB — fully Dockerized.</p>
+            <a class="link" href="https://github.com/furkandrms/multi-modal-agent" target="_blank" rel="noopener">github.com ↗</a>
+          </div>
+
+          <div class="card">
+            <div class="card-top"><h3>echobot-agent</h3><span class="star">★ 2</span></div>
+            <p>Autonomous, customizable and modular social media AI agent framework built for automation.</p>
+            <a class="link" href="https://github.com/furkandrms/echobot-agent" target="_blank" rel="noopener">github.com ↗</a>
+          </div>
+
+          <div class="card">
+            <div class="card-top"><h3>google-video-intelligence-api</h3></div>
+            <p>FastAPI backend that visualizes video analysis results from Google Cloud Video Intelligence API on a Streamlit dashboard.</p>
+            <a class="link" href="https://github.com/furkandrms/google-video-intelligence-api" target="_blank" rel="noopener">github.com ↗</a>
+          </div>
+
+          <div class="card">
+            <div class="card-top"><h3>generate-image-content</h3><span class="star">★ 4</span></div>
+            <p>Generates image content for photos using AI-driven pipelines.</p>
+            <a class="link" href="https://github.com/furkandrms/generate-image-content" target="_blank" rel="noopener">github.com ↗</a>
+          </div>
+
+          <div class="card">
+            <div class="card-top"><h3>stylized-object-generation</h3></div>
+            <p>Generates new game assets in a consistent artistic style using FAL AI's style-transfer models.</p>
+            <a class="link" href="https://github.com/furkandrms/stylized-object-generation" target="_blank" rel="noopener">github.com ↗</a>
+          </div>
+
+          <div class="card">
+            <div class="card-top"><h3>Text-Summarization-NLP-Project</h3><span class="star">★ 4</span></div>
+            <p>An NLP project for automatic text summarization.</p>
+            <a class="link" href="https://github.com/furkandrms/Text-Summarization-NLP-Project" target="_blank" rel="noopener">github.com ↗</a>
+          </div>
+
+          <div class="card">
+            <div class="card-top"><h3>forecasting-AQI-Australia</h3></div>
+            <p>Predicts Australia's air quality up to 2030 using time series analysis on historical data.</p>
+            <a class="link" href="https://github.com/furkandrms/forecasting-AQI-Australia" target="_blank" rel="noopener">github.com ↗</a>
+          </div>
+
+          <div class="card">
+            <div class="card-top"><h3>SpaceX-Data-Sci-Project-IBM</h3><span class="star">★ 3</span></div>
+            <p>IBM Data Science capstone: predicting SpaceX Falcon 9 first-stage landing success.</p>
+            <a class="link" href="https://github.com/furkandrms/SpaceX-Data-Sci-Project-IBM" target="_blank" rel="noopener">github.com ↗</a>
+          </div>
+
+          <div class="card">
+            <div class="card-top"><h3>Twitter-API-Sentiment-Analysis</h3></div>
+            <p>Sentiment analysis on tweets pulled live via the Twitter API.</p>
+            <a class="link" href="https://github.com/furkandrms/Twitter-API-Sentiment-Analysis" target="_blank" rel="noopener">github.com ↗</a>
+          </div>
+
+          <div class="card">
+            <div class="card-top"><h3>data-science-for-everyone</h3><span class="star">★ 2</span></div>
+            <p>Approachable notes and notebooks for learning data science from the ground up.</p>
+            <a class="link" href="https://github.com/furkandrms/data-science-for-everyone" target="_blank" rel="noopener">github.com ↗</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-grid">
+      <div>
+        <h2>Skills &amp; Tools</h2>
+        <div class="section-sub">what I build with</div>
+      </div>
+      <div class="skill-groups">
+        <div class="skill-row">
+          <div class="label">Languages</div>
+          <div class="tags"><span class="tag">Python</span><span class="tag">C#</span></div>
+        </div>
+        <div class="skill-row">
+          <div class="label">AI / ML</div>
+          <div class="tags">
+            <span class="tag">LangChain</span><span class="tag">OpenAI</span><span class="tag">RAG</span>
+            <span class="tag">TensorFlow</span><span class="tag">Keras</span><span class="tag">PyTorch</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="label">Backend</div>
+          <div class="tags"><span class="tag">FastAPI</span><span class="tag">Docker</span></div>
+        </div>
+        <div class="skill-row">
+          <div class="label">Data</div>
+          <div class="tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">PySpark</span></div>
+        </div>
+        <div class="skill-row">
+          <div class="label">Databases</div>
+          <div class="tags">
+            <span class="tag">MongoDB</span><span class="tag">Supabase pgVector</span>
+            <span class="tag">PostgreSQL</span><span class="tag">MongoDB Atlas Vector Search</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="label">Cloud</div>
+          <div class="tags">
+            <span class="tag">AWS Elastic Beanstalk</span><span class="tag">AWS OpenSearch</span>
+            <span class="tag">DynamoDB</span><span class="tag">GCP App Engine</span><span class="tag">GCP Video AI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-grid">
+      <div>
+        <h2>Education</h2>
+        <div class="section-sub">&amp; certifications</div>
+      </div>
+      <div>
+        <div class="edu-item">
+          <h3>B.S. in Mathematics</h3>
+          <p>Kocaeli University</p>
+        </div>
+        <div class="edu-item">
+          <h3>Master RAG: Ultimate Retrieval-Augmented Generation</h3>
+          <p>Udemy</p>
+        </div>
+        <div class="edu-item">
+          <h3>Data Engineer Bootcamp</h3>
+          <p>Tech Istanbul</p>
+        </div>
+        <div class="edu-item">
+          <h3>Data Scientist Bootcamp</h3>
+          <p>Miuul</p>
+        </div>
+        <div class="edu-item">
+          <h3>Applied Data Science Capstone</h3>
+          <p>IBM</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-grid">
+      <div>
+        <h2>Contact</h2>
+      </div>
+      <div>
+        <a class="contact-email" href="mailto:furkandr.durmus@gmail.com">furkandr.durmus@gmail.com</a>
+        <p class="contact-desc">Based in Istanbul. Open to interesting projects, collaborations, and conversations about AI, agents, and RAG.</p>
+        <div class="social-row">
+          <a href="https://github.com/furkandrms" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/furkandurmus/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://medium.com/@Furkandurmus" target="_blank" rel="noopener">Medium</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Furkan Durmuş</span>
+    <span>Built with a lot of coffee, in Istanbul</span>
+  </footer>
+
+</main>
+
+</body>
+</html>
