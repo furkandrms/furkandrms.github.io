@@ -9,7 +9,11 @@
   <meta property="og:url" content="https://furkandrms.github.io/">
   <meta property="og:title" content="Furkan Durmuş — AI & Python Developer">
   <meta property="og:description" content="RAG, agentic sistemler ve makine öğrenmesi üzerine çalışan bir mühendisin portföyü.">
-  <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://furkandrms.github.io/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="627">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://furkandrms.github.io/og-image.png">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -169,6 +173,28 @@
     padding:32px 0 48px;color:var(--text-faint);font-size:13px;
     display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
   }
+
+  /* Showcase: animated demo card */
+  .showcase{margin:56px 0 8px;}
+  .showcase-window{position:relative;border:1px solid var(--border);border-radius:16px;background:var(--bg-raised);overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.4),0 40px 90px -40px var(--accent-soft),0 0 60px -30px var(--accent);transition:border-color .2s ease,transform .3s ease;}
+  .showcase-window:hover{border-color:var(--border-hover);transform:translateY(-2px);}
+  .showcase-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--bg-alt);border-bottom:1px solid var(--border);}
+  .showcase-bar i{width:10px;height:10px;border-radius:50%;background:var(--border-hover);display:block;}
+  .showcase-bar i:first-child{background:#ff5f57;opacity:.85;}
+  .showcase-bar i:nth-child(2){background:#febc2e;opacity:.85;}
+  .showcase-bar i:nth-child(3){background:#28c840;opacity:.85;}
+  .showcase-bar span{margin-left:10px;font-family:var(--mono);font-size:12px;color:var(--text-faint);}
+  .showcase-bar .live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--accent);}
+  .showcase-bar .live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.8s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+  .showcase-media{display:block;background:#000;line-height:0;}
+  .showcase-media img{display:block;width:100%;height:auto;max-width:none;}
+  .showcase-caption{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid var(--border);}
+  .showcase-caption p{margin:0;font-size:14px;color:var(--text-dim);}
+  .showcase-caption .tags{gap:6px;}
+  .showcase-caption .tag{font-size:12px;padding:3px 9px;}
+  @media (prefers-reduced-motion: reduce){ .showcase-window,.showcase-bar .live::before{transition:none;animation:none;} }
+  @media (max-width:640px){ .showcase{margin-top:40px;} .showcase-bar .live{display:none;} }
 </style>
 </head>
 <body>
@@ -199,6 +225,19 @@
       <a class="btn btn-ghost" href="#contact">Get in touch</a>
     </div>
   </section>
+  <figure class="showcase" aria-label="Generative AI demo animation" style="margin-left:0;margin-right:0;">
+    <div class="showcase-window">
+      <div class="showcase-bar"><i></i><i></i><i></i><span>generative-ai.gif</span><em class="live" style="font-style:normal">looping</em></div>
+      <picture class="showcase-media">
+        <source media="(prefers-reduced-motion: reduce)" srcset="og-image.png">
+        <img src="demo.gif" width="800" height="450" alt="Pixel-art animation of a developer conducting a neural network while LLM tokens stream past" decoding="async">
+      </picture>
+      <figcaption class="showcase-caption">
+        <p>Generative AI, from tokens to neurons.</p>
+        <div class="tags"><span class="tag">Generative AI</span><span class="tag">LLM</span><span class="tag">RAG</span></div>
+      </figcaption>
+    </div>
+  </figure>
 
   <div class="divider">Writing about AI engineering, RAG, and agentic systems</div>
 
